@@ -8,18 +8,71 @@ output:
 
 ## Loading and preprocessing the data
 
+activity <- read.csv("activity.csv", header = TRUE, sep = ",", quote = "\"",
+                     dec = ".", fill = TRUE, comment.char = "")
 
 
 ## What is mean total number of steps taken per day?
 
+# 2.1 Calculate the total number of steps taken per day
+total_per_day <- aggregate(steps ~  date, data = activity,
+                           FUN = sum, na.rm = TRUE)
+                           
+# 2.2 Histogram of the total number of steps taken each day
+hist(total_per_day$steps, freq = TRUE,  col = "red", border = NULL,
+     main = "Total number of steps per day",
+     xlab = "Total number of steps per day",
+     axes = TRUE
+)
+
+# 2.3 Calculate and report the mean and median of the total number of steps taken per day
+mean_of_total_per_day <-  mean(total_per_day$steps, trim = 0, na.rm = FALSE)
+median_of_total_per_day <- median(total_per_day$steps, na.rm = FALSE)
 
 
 ## What is the average daily activity pattern?
 
+average_per_interval <- aggregate(steps ~  interval, data = activity,
+                           FUN = mean, na.rm = TRUE)
+
+# 2.1 Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis)
+#     and the average number of steps taken, averaged across all days (y-axis)
+
+plot(average_per_interval$interval, average_per_interval$steps,
+     main = "Average steps per interval",
+     type = "l",
+     ylab = "Steps (per interval)",
+     xlab = ""
+)
+
+# 2.2 Which 5-minute interval, on average across all the days in the dataset,
+#     contains the maximum number of steps?
+
+average_per_interval$interval[which.max(average_per_interval$steps)]
 
 
 ## Imputing missing values
 
+# 3.1 Calculate and report the total number of missing values in the dataset
+#     (i.e. the total number of rows with NAs)
+length(activity$steps[is.na(activity$steps) == TRUE])
+
+# Strategy - filling in missing values with rounded mean 
+#            for that 5-minute interval
+
+# Create a new dataset that is equal to the original dataset
+# but with the missing data filled in.
+
+aa <- merge(activity, average_per_interval, by = "interval", sort = FALSE)
+
+aa$steps <- aa$steps.x
+aa$steps[is.na(aa$steps.x) == TRUE] <-
+    round(aa$steps.y[is.na(aa$steps.x) == TRUE])
+
+aa <- aa[order(date, interval),]
+
+imputed_activity <- aa[ ,c("date", "interval", "steps")]
+rownames(imputed_activity) <- NULL
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
