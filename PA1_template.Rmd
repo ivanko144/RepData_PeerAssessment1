@@ -177,8 +177,8 @@ plot(average_per_interval_wday$interval, average_per_interval_wday$steps
      , axes = FALSE
      , xlim = c(0,2500)
      , ylim = c(0,330)
-      , ylab = ""
-      , xlab = ""
+     , ylab = "Number of steps"
+     , xlab = "Interval"
 )
 axis(1); axis(2, las = 2) 
 axis(4, labels = FALSE); box(which = "plot", lty = "solid")
