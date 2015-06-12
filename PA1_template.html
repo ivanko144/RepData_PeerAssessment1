@@ -64,13 +64,13 @@ img {
 </div>
 
 
-<div id="loading-and-preprocessing-the-data" class="section level1">
-<h1>1. Loading and preprocessing the data</h1>
+<div id="loading-and-preprocessing-the-data" class="section level2">
+<h2>1. Loading and preprocessing the data</h2>
 <pre class="r"><code>activity &lt;- read.csv(&quot;activity.csv&quot;, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;,
                      dec = &quot;.&quot;, fill = TRUE, comment.char = &quot;&quot;)</code></pre>
 </div>
-<div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level1">
-<h1>2. What is mean total number of steps taken per day?</h1>
+<div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
+<h2>2. What is mean total number of steps taken per day?</h2>
 <p>2.1. Calculate the total number of steps taken per day</p>
 <pre class="r"><code>total_per_day &lt;- aggregate(steps ~  date, data = activity,
                            FUN = sum, na.rm = TRUE)</code></pre>
@@ -85,8 +85,8 @@ img {
 <pre class="r"><code>mean_of_total_per_day &lt;-  mean(total_per_day$steps, trim = 0, na.rm = FALSE)
 median_of_total_per_day &lt;- median(total_per_day$steps, na.rm = FALSE)</code></pre>
 </div>
-<div id="what-is-the-average-daily-activity-pattern" class="section level1">
-<h1>3. What is the average daily activity pattern?</h1>
+<div id="what-is-the-average-daily-activity-pattern" class="section level2">
+<h2>3. What is the average daily activity pattern?</h2>
 <pre class="r"><code>average_per_interval &lt;- aggregate(steps ~  interval, data = activity,
                            FUN = mean, na.rm = TRUE)</code></pre>
 <p>3.1. Make a time series plot (i.e. type = “l”) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</p>
@@ -101,8 +101,8 @@ median_of_total_per_day &lt;- median(total_per_day$steps, na.rm = FALSE)</code><
 <pre class="r"><code>average_per_interval$interval[which.max(average_per_interval$steps)]</code></pre>
 <pre><code>## [1] 835</code></pre>
 </div>
-<div id="imputing-missing-values" class="section level1">
-<h1>4. Imputing missing values</h1>
+<div id="imputing-missing-values" class="section level2">
+<h2>4. Imputing missing values</h2>
 <p>4.1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)</p>
 <pre class="r"><code>length(activity$steps[is.na(activity$steps) == TRUE])</code></pre>
 <pre><code>## [1] 2304</code></pre>
@@ -149,8 +149,8 @@ hist(total_per_day_i$steps, freq = TRUE,  col = &quot;red&quot;, border = NULL,
 )</code></pre>
 <p><img src="data:image/png;base64,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" /></p>
 </div>
-<div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level1">
-<h1>5. Are there differences in activity patterns between weekdays and weekends?</h1>
+<div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
+<h2>5. Are there differences in activity patterns between weekdays and weekends?</h2>
 <p>5.1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</p>
 <pre class="r"><code>library(lubridate)
 

@@ -1,13 +1,13 @@
 # Reproducible Research: Peer Assessment 1
 
 
-#1. Loading and preprocessing the data
+##1. Loading and preprocessing the data
 
 ```r
 activity <- read.csv("activity.csv", header = TRUE, sep = ",", quote = "\"",
                      dec = ".", fill = TRUE, comment.char = "")
 ```
-#2. What is mean total number of steps taken per day?
+##2. What is mean total number of steps taken per day?
 
   2.1. Calculate the total number of steps taken per day
 
@@ -36,7 +36,7 @@ median_of_total_per_day <- median(total_per_day$steps, na.rm = FALSE)
 ```
 
 
-# 3. What is the average daily activity pattern?
+## 3. What is the average daily activity pattern?
 
 ```r
 average_per_interval <- aggregate(steps ~  interval, data = activity,
@@ -67,7 +67,7 @@ average_per_interval$interval[which.max(average_per_interval$steps)]
 ```
 
 
-# 4. Imputing missing values
+## 4. Imputing missing values
 
   4.1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
@@ -140,7 +140,7 @@ hist(total_per_day_i$steps, freq = TRUE,  col = "red", border = NULL,
 
 ![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
 
-# 5. Are there differences in activity patterns between weekdays and weekends?
+## 5. Are there differences in activity patterns between weekdays and weekends?
 
   5.1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
